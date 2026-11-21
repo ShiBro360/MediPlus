@@ -1,0 +1,40 @@
+# --- secrets & local config -------------------------------------------------
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+config.local.php
+
+# --- dependencies -----------------------------------------------------------
+/vendor/
+/node_modules/
+
+# --- database dumps ---------------------------------------------------------
+# database.sql is the tracked schema + demo seed. Backups and exports are not.
+*.dump
+*.sql.gz
+/backups/
+/dumps/
+*.backup.sql
+
+# --- user content & exports -------------------------------------------------
+/uploads/
+/storage/
+*.csv
+*.xlsx
+
+# --- logs & runtime ---------------------------------------------------------
+/logs/
+*.log
+/tmp/
+/cache/
+.phpunit.result.cache
+
+# --- OS / editors -----------------------------------------------------------
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*~

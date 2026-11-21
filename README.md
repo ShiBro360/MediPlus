@@ -1,0 +1,124 @@
+# MediPlus — clinic appointment system
+
+An appointment system for a small clinic: patients, doctors, cabinets,
+services, working hours, absences and visit history. PHP backend with PDO and
+MySQL, plus a static HTML/CSS/JavaScript front end. Personal project.
+
+> **All data is fictional.** Every patient, doctor, login and phone number in
+> this repository was made up for the demo. No real patient, medical record or
+> personal data is stored or published here. `database.sql` contains the demo
+> accounts and settings; replace their passwords before any real use.
+
+## Status
+
+Backend prototype. The API is implemented and tested against a local MySQL
+database; the front end is a static prototype that is not yet connected to it.
+
+## Features
+
+- **Users and roles** — reception, doctor and administrator accounts with hashed
+  passwords (`password_hash`), status and forced password change flag.
+- **Scheduling** — appointments with date, start and end time, doctor, cabinet
+  and medical service; overlap policy configurable in appointment settings.
+- **Patients** — registration with contact details, PESEL, address, notes.
+- **Clinicians** — doctors with specializations, cabinets, absences, clinic
+  working hours per weekday.
+- **Services** — medical services with duration, price and active flag.
+- **Notifications** — internal per-user notification centre with recipients.
+- **Email** — SMTP settings and sending appointment confirmations.
+- **Data exchange** — CSV import and export of patients and appointments.
+- **Settings** — clinic details and appointment/security policy stored as JSON.
+
+## Stack
+
+| Layer | Choice |
+|---|---|
+| Language | PHP 8, `declare(strict_types=1)` in the API files |
+| Database | MySQL 8, InnoDB, utf8mb4, PDO prepared statements, foreign keys |
+| Frontend | Static HTML, CSS and vanilla JavaScript |
+| Integrations | SMTP, CSV |
+
+## Data model
+
+15 tables in `database.sql`:
+
+`roles`, `users`, `specializations`, `cabinets`, `patients`, `doctors`,
+`doctor_absences`, `clinic_working_hours`, `appointment_settings`,
+`system_settings`, `notifications`, `notification_recipients`,
+`medical_services`, `appointments`, `visit_history`.
+
+## API
+
+All endpoints live under `backend/api/` and speak JSON:
+
+| Endpoint | Methods | Purpose |
+|---|---|---|
+| `auth.php` | POST | login |
+| `patients.php` | GET, POST | list and create patients |
+| `doctors.php` | GET | list doctors with specializations |
+| `cabinets.php` | GET | list cabinets |
+| `doctor_absences.php` | GET, POST | doctor absences |
+| `services.php` | GET | medical services |
+| `appointments.php` | GET, POST, PATCH, PUT | list, book, change status |
+| `notifications.php` | GET, POST | notification centre |
+| `email.php` | POST | send an e-mail |
+| `email_settings.php` | GET, POST | SMTP configuration |
+| `settings.php` | GET, POST | clinic and system settings |
+| `users.php` | GET, POST | staff accounts |
+| `export.php` | GET | CSV export |
+| `import.php` | POST | CSV import |
+
+`backend/index.php` returns the endpoint list as JSON and is handy for a quick
+check that PHP and Apache are wired up.
+
+## Getting started
+
+### Requirements
+
+- PHP 8+ with `pdo_mysql`
+- MySQL 8.0+
+- Apache (developed on XAMPP)
+
+### 1. Database
+
+```bash
+mysql -u root -p < database.sql
+```
+
+This creates the `mediplus` database, its tables, the weekly opening hours, the
+default appointment settings and a few demo accounts.
+
+### 2. Configuration
+
+Edit `backend/config/database.php` for your local MySQL host, database name,
+user and password. The file ships with local defaults only and contains no
+secrets.
+
+### 3. Run
+
+Copy the project into the Apache document root and open `index.html`, or serve
+it directly:
+
+```bash
+php -S localhost:8080
+```
+
+### Demo accounts
+
+`database.sql` seeds accounts such as `recepcja` and `anna.nowak` with
+`@mediplus.local` addresses. They share one demo password hash — set new
+passwords for every account before using the system with real data.
+
+## Known gaps (in progress)
+
+- front end is not wired to the API yet
+- no session-based authentication middleware: `auth.php` checks credentials but
+  the endpoints do not enforce a session
+- no automated tests yet
+- no migration tool
+- CSRF tokens are not on every form
+
+## Contact
+
+Artem Vitiaz — Bydgoszcz, Poland
+[github.com/ShiBro360](https://github.com/ShiBro360) · shibro36@gmail.com

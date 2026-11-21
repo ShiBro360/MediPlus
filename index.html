@@ -1,0 +1,239 @@
+﻿<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediPlus | System wewnętrzny kliniki</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/favicon-32.png?v=2026-09-13-01">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/icons/favicon-192.png?v=2026-09-13-01">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/icons/apple-touch-icon.png?v=2026-09-13-01">
+  <link rel="stylesheet" href="style.css?v=registration-error-2026-09-13-03">
+</head>
+<body>
+  <section class="login-screen" id="loginScreen">
+    <div class="login-card">
+      <div class="login-visual" aria-hidden="true">
+        <div class="clinic-sign">
+          <div class="brand-icon">+</div>
+          <div>
+            <strong>MediPlus</strong>
+            <span>Centrum Medyczne</span>
+          </div>
+        </div>
+        <div class="secure-note">
+          <div class="secure-icon">▣</div>
+          <div>
+            <strong>System wewnętrzny kliniki</strong>
+            <span>Dostęp mają wyłącznie uprawnieni pracownicy kliniki MediPlus.</span>
+          </div>
+        </div>
+      </div>
+
+      <form class="login-form" id="loginForm" autocomplete="off" novalidate>
+        <div class="login-logo">
+          <div class="brand-icon large">+</div>
+          <div>
+            <strong>MediPlus</strong>
+            <span>System wewnętrzny kliniki</span>
+          </div>
+        </div>
+        <div class="login-copy">
+          <h1>Witaj ponownie!</h1>
+          <p>Zaloguj się, aby przejść do systemu.</p>
+        </div>
+        <label>
+          Login
+          <input type="text" name="login" placeholder="Wprowadź login" autocomplete="off" autocapitalize="off" spellcheck="false" required>
+        </label>
+        <label>
+          Hasło
+          <input type="password" name="password" placeholder="Wprowadź hasło" autocomplete="current-password" required>
+        </label>
+        <label class="check-row">
+          <input type="checkbox" name="remember" checked>
+          <span>Zapamiętaj mnie</span>
+        </label>
+        <p class="form-message" id="loginStatus" role="status" aria-live="polite"></p>
+        <button class="primary-button wide" type="submit">Zaloguj się <span>→</span></button>
+        <div class="login-help">
+          <strong>Problem z logowaniem?</strong>
+          <span>Skontaktuj się z administratorem systemu.</span>
+        </div>
+        <footer>Wersja 1.0.0 <span>© 2026 MediPlus. Wszelkie prawa zastrzeżone.</span></footer>
+      </form>
+    </div>
+  </section>
+
+  <div class="app-shell is-hidden" id="appShell">
+    <aside class="sidebar" aria-label="Główna nawigacja">
+      <div class="brand">
+        <div class="brand-icon">+</div>
+        <div>
+          <strong>MediPlus</strong>
+          <span>System wewnętrzny kliniki</span>
+        </div>
+      </div>
+      <nav class="sidebar-nav" id="sidebarNav"></nav>
+      <button class="logout-button" type="button" id="logoutButton">↪ Wyloguj się</button>
+      <span class="version">Wersja 1.0.0</span>
+    </aside>
+
+    <div class="workspace">
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="menu-button" type="button" aria-label="Menu">☰</button>
+          <h1 id="topbarTitle">Dashboard</h1>
+        </div>
+        <div class="topbar-actions">
+          <label class="global-search">
+            <span>⌕</span>
+            <input type="search" placeholder="Szukaj pacjenta, lekarza, usługi...">
+            <kbd>Ctrl + K</kbd>
+          </label>
+          <button class="icon-button notification-button" type="button" aria-label="Powiadomienia">
+            <svg class="ui-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 7h18s-3 0-3-7"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="notification-count">3</span>
+          </button>
+          <div class="profile">
+            <div class="profile-avatar-slot" id="profileAvatar"><div class="avatar photo">R</div></div>
+            <div class="profile-copy">
+              <strong id="profileName">Recepcja</strong>
+            <span id="profileRole">Recepcja</span>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <section class="view active" id="dashboardView" data-title="Dashboard"></section>
+        <section class="view" id="calendarView" data-title="Kalendarz wizyt">
+          <div class="calendar-layout">
+            <section class="calendar-card">
+              <div class="doctor-day-grid" id="calendarGrid" aria-label="Kalendarz wizyt"></div>
+            </section>
+            <aside class="side-stack calendar-sidebar">
+              <div class="mini-calendar card" id="miniCalendar"></div>
+              <div class="calendar-sidebar-sticky">
+              <div class="card calendar-control-card">
+                <h3>Widok</h3>
+                <div class="sidebar-segmented" aria-label="Widok kalendarza">
+                  <button type="button" class="view-button active" data-view-mode="day">Dzień</button>
+                  <button type="button" class="view-button" data-view-mode="week">Tydzień</button>
+                  <button type="button" class="view-button" data-view-mode="month">Miesiąc</button>
+                </div>
+              </div>
+              <div class="card calendar-control-card">
+                <h3>Nawigacja</h3>
+                <strong class="calendar-current sidebar-period-label" id="weekRange">16 maja 2025 (piątek)</strong>
+                <div class="sidebar-navigation">
+                  <button type="button" class="secondary-button" id="todayButton">Dzisiaj</button>
+                  <button type="button" class="secondary-button" id="prevWeek">Poprzedni</button>
+                  <button type="button" class="secondary-button" id="nextWeek">Następny</button>
+                </div>
+              </div>
+              <div class="card filter-card">
+                <h3>Filtry</h3>
+                <select id="doctorFilter"><option value="">Wszyscy lekarze</option></select>
+                <select id="cabinetFilter"><option value="">Wszystkie gabinety</option><option>Gabinet 1</option><option>Gabinet 2</option><option>Gabinet 3</option><option>Gabinet 4</option></select>
+                <select id="serviceFilter"><option value="">Wszystkie usługi</option></select>
+              </div>
+              <div class="card calendar-control-card">
+                <h3>Akcje</h3>
+                <button type="button" class="primary-button sidebar-action-button" id="newAppointmentButton">+ Nowa wizyta</button>
+              </div>
+              <div class="info-card">ⓘ Kliknij wolny termin lub przycisk „Nowa wizyta”, aby zarejestrować pacjenta.</div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="registrationView" data-title="Nowa rejestracja"></section>
+        <section class="view" id="patientsView" data-title="Pacjenci"></section>
+        <section class="view" id="patientCardView" data-title="Karta pacjenta"></section>
+        <section class="view" id="doctorsView" data-title="Lekarze"></section>
+        <section class="view" id="doctorCardView" data-title="Karta lekarza"></section>
+        <section class="view" id="roomsView" data-title="Gabinety"></section>
+        <section class="view" id="servicesView" data-title="Usługi medyczne"></section>
+        <section class="view" id="historyView" data-title="Historia wizyt"></section>
+        <section class="view" id="usersView" data-title="Użytkownicy"></section>
+        <section class="view" id="settingsView" data-title="Ustawienia"></section>
+      </main>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="appointmentModal" hidden>
+    <div class="modal registration-modal" role="dialog" aria-modal="true" aria-labelledby="appointmentModalTitle">
+      <div class="modal-heading">
+        <h2 id="appointmentModalTitle">Nowa rejestracja</h2>
+        <button class="modal-close" type="button" data-close-modal aria-label="Zamknij">×</button>
+      </div>
+      <form class="appointment-form" id="appointmentForm" novalidate>
+        <section class="registration-left card flat">
+          <h3>Pacjent</h3>
+          <div class="patient-panel-block existing-patient-block">
+            <label class="patient-search-label">Istniejący pacjent
+              <input type="search" name="patientSearch" placeholder="Szukaj pacjenta po imieniu, nazwisku, PESEL lub telefonie...">
+            </label>
+          </div>
+          <div class="selected-patient" id="selectedPatientSummary" hidden></div>
+          <div class="patient-panel-block patient-new-block">
+            <h4>Nowy pacjent</h4>
+            <div class="form-grid patient-fields" id="patientFields">
+              <label>Imię<input type="text" name="firstName" placeholder="Jan" required></label>
+              <label>Nazwisko<input type="text" name="lastName" placeholder="Kowalski" required></label>
+              <label class="patient-phone-field">Telefon<input type="tel" name="phone" placeholder="+48 123 456 789" required></label>
+            </div>
+            <button class="patient-new-button" type="button" id="useNewPatientButton">+ Dodaj nowego pacjenta</button>
+          </div>
+          <div class="patient-panel-block recent-patient-block">
+            <div class="recent-patients" id="recentPatients"></div>
+          </div>
+        </section>
+        <section class="registration-right">
+          <div class="form-grid">
+            <label class="span-2">Lekarz<select name="doctor" required><option value="">Wybierz lekarza</option></select></label>
+            <label class="span-2">Usługa / specjalizacja<select name="specialization" required><option value="">Wybierz usługę</option></select></label>
+            <label>Data wizyty<input type="date" name="date" required></label>
+            <label class="visually-hidden">Godzina rozpoczęcia<select name="time" required></select></label>
+            <div class="time-choice-panel span-2">
+              <div class="time-choice-head">
+                <div>
+                  <strong>Wybierz godzinę rozpoczęcia</strong>
+                  <span>Wyświetlane godziny są dostępne dla wybranego lekarza i usługi.</span>
+                </div>
+              </div>
+              <div class="time-slot-buttons" id="timeSlotButtons"></div>
+            </div>
+            <label class="span-2">Gabinet<select name="cabinet" required><option value="">Wybierz gabinet</option><option>Gabinet 1</option><option>Gabinet 2</option><option>Gabinet 3</option><option>Gabinet 4</option></select></label>
+            <label class="span-2">Krótka notatka<textarea name="note" rows="3" placeholder="Powód konsultacji lub informacja dla lekarza"></textarea></label>
+          </div>
+          <div class="duration-box" id="durationBox">ⓘ Czas trwania wizyty: 30 min <span>Planowane zakończenie: --:--</span></div>
+          <p class="form-message" id="appointmentStatus" role="status" aria-live="polite"></p>
+        </section>
+        <div class="modal-actions">
+          <button class="secondary-button" type="button" data-close-modal>Anuluj</button>
+          <button class="primary-button" type="submit">Zapisz wizytę</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="modal-backdrop" id="detailsModal" hidden>
+    <div class="modal compact-modal" role="dialog" aria-modal="true" aria-labelledby="detailsModalTitle">
+      <div class="modal-heading">
+        <h2 id="detailsModalTitle">Szczegóły wizyty</h2>
+        <button class="modal-close" type="button" data-close-modal aria-label="Zamknij">×</button>
+      </div>
+      <dl class="details-list" id="appointmentDetails"></dl>
+      <div class="modal-actions"><button class="primary-button" type="button" data-close-modal>Zamknij</button></div>
+    </div>
+  </div>
+
+  <script src="script.js?v=calendar-working-doctors-2026-09-13-01"></script>
+</body>
+</html>
+
+
+
+
+
