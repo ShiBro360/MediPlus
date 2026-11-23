@@ -11,8 +11,10 @@ MySQL, plus a static HTML/CSS/JavaScript front end. Personal project.
 
 ## Status
 
-Backend prototype. The API is implemented and tested against a local MySQL
-database; the front end is a static prototype that is not yet connected to it.
+Working prototype. The API is implemented against MySQL, and the front end talks
+to it: sign-in goes through `backend/api/auth.php`, and the patients, doctors,
+services and visit history screens load their rows from the API. Screens that
+are not yet exercised end to end are listed under *Known gaps*.
 
 ## Features
 
@@ -28,6 +30,38 @@ database; the front end is a static prototype that is not yet connected to it.
 - **Email** — SMTP settings and sending appointment confirmations.
 - **Data exchange** — CSV import and export of patients and appointments.
 - **Settings** — clinic details and appointment/security policy stored as JSON.
+
+## Screenshots
+
+Taken against the demo database created by `database.sql`, with the seeded demo
+account. Every patient, doctor and phone number below is fictional.
+
+**Sign-in** — session-based login against `auth.php`.
+
+![Sign-in](docs/screenshots/01-login.png)
+
+**Patients** — search, profile completeness filter, last visit, PESEL and contact
+details.
+
+![Patients](docs/screenshots/02-patients.png)
+
+**Doctors** — specialisation, cabinet, contact and status per clinician.
+
+![Doctors](docs/screenshots/03-doctors.png)
+
+**Medical services** — catalogue with duration, price and a live preview panel.
+
+![Services](docs/screenshots/04-services.png)
+
+**New registration** — the five-step reception flow: patient, service, slot,
+doctor, confirmation.
+
+![Registration](docs/screenshots/05-registration.png)
+
+**Visit history** — filters by date, doctor, cabinet, service and status, with a
+summary and CSV export.
+
+![Visit history](docs/screenshots/06-history.png)
 
 ## Stack
 
@@ -111,7 +145,8 @@ passwords for every account before using the system with real data.
 
 ## Known gaps (in progress)
 
-- front end is not wired to the API yet
+- some screens (e-mail settings, notifications, CSV import/export) have not been
+  exercised end to end through the UI yet
 - no session-based authentication middleware: `auth.php` checks credentials but
   the endpoints do not enforce a session
 - no automated tests yet
