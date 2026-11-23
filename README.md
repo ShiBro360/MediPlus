@@ -18,17 +18,21 @@ are not yet exercised end to end are listed under *Known gaps*.
 
 ## Features
 
-- **Users and roles** — reception, doctor and administrator accounts with hashed
-  passwords (`password_hash`), status and forced password change flag.
+- **Users and roles** — reception and doctor accounts with hashed passwords
+  (`password_hash`), status and a forced password change flag.
 - **Scheduling** — appointments with date, start and end time, doctor, cabinet
-  and medical service; overlap policy configurable in appointment settings.
+  and medical service. Booking rejects a second visit for the same patient,
+  phone number or PESEL in an overlapping slot; the `allow_overlaps` setting is
+  stored in appointment settings but is not enforced for doctor collisions.
 - **Patients** — registration with contact details, PESEL, address, notes.
 - **Clinicians** — doctors with specializations, cabinets, absences, clinic
   working hours per weekday.
 - **Services** — medical services with duration, price and active flag.
 - **Notifications** — internal per-user notification centre with recipients.
 - **Email** — SMTP settings and sending appointment confirmations.
-- **Data exchange** — CSV import and export of patients and appointments.
+- **Data exchange** — CSV export of patients, doctors, appointments, cabinets and
+  services, a full JSON backup, and CSV import of patients, services and
+  cabinets (with a preview step before anything is written).
 - **Settings** — clinic details and appointment/security policy stored as JSON.
 
 ## Screenshots
@@ -99,17 +103,17 @@ All endpoints live under `backend/api/` and speak JSON:
 | Endpoint | Methods | Purpose |
 |---|---|---|
 | `auth.php` | POST | login |
-| `patients.php` | GET, POST | list and create patients |
-| `doctors.php` | GET | list doctors with specializations |
-| `cabinets.php` | GET | list cabinets |
-| `doctor_absences.php` | GET, POST | doctor absences |
-| `services.php` | GET | medical services |
+| `patients.php` | GET, POST, PUT | list, create and update patients |
+| `doctors.php` | GET, POST, PUT, PATCH | doctors with specializations |
+| `cabinets.php` | GET, POST, PUT, DELETE | cabinets |
+| `doctor_absences.php` | GET, POST, PATCH, PUT | doctor absences |
+| `services.php` | GET, POST, PUT, PATCH | medical services |
 | `appointments.php` | GET, POST, PATCH, PUT | list, book, change status |
-| `notifications.php` | GET, POST | notification centre |
+| `notifications.php` | GET, PATCH | notification centre |
 | `email.php` | POST | send an e-mail |
-| `email_settings.php` | GET, POST | SMTP configuration |
-| `settings.php` | GET, POST | clinic and system settings |
-| `users.php` | GET, POST | staff accounts |
+| `email_settings.php` | GET, POST, PUT | SMTP configuration |
+| `settings.php` | GET, POST, PUT | clinic and system settings |
+| `users.php` | GET, POST, PUT, PATCH | staff accounts |
 | `export.php` | GET | CSV export |
 | `import.php` | POST | CSV import |
 
@@ -203,10 +207,13 @@ on PESEL and e-mail.
 - some screens (e-mail settings, notifications, CSV import/export) have not been
   exercised end to end through the UI yet
 - no session-based authentication middleware: `auth.php` checks credentials but
-  the endpoints do not enforce a session
+  no endpoint verifies that a user is signed in, so the API answers unauthenticated
+  callers
+- `allow_overlaps` is stored in settings but only patient-level conflicts are
+  rejected when booking
 - no automated tests yet
 - no migration tool
-- CSRF tokens are not on every form
+- no CSRF tokens at all: mutations are accepted without a token
 
 ## Contact
 
